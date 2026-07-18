@@ -19,9 +19,9 @@ async function newOrder( symbol, quantity, side = "BUY", type = "MARKET", price 
     .update(new URLSearchParams({ ...data, timestamp, recvWindow }).toString())
     .digest("hex");
 
-  const newData = { ...data, timestamp, recvWindow, signature };
+  const queryString = new URLSearchParams({ ...data, timestamp, recvWindow, signature }).toString();
 
-  return axios.post(`${apiUrl}/v1/order`, newData, {
+  return axios.post(`${apiUrl}/v1/order?${queryString}`, null, {
       headers: {
           "X-MBX-APIKEY": apiKey,
       },
